@@ -1,0 +1,28 @@
+{
+  "name": "challenge_1",
+  "version": "1.0.0",
+  "description": "Academic project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aab595/Challenge_Mongoose.git"
+  },
+  "keywords": [
+    "mongo",
+    "express",
+    "ejs"
+  ],
+  "author": "AAB and FN",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aab595/Challenge_Mongoose/issues"
+  },
+  "homepage": "https://github.com/aab595/Challenge_Mongoose#readme",
+  "dependencies": {
+    "mongoose": "^6.1.2"
+  }
+}
