@@ -1,0 +1,28 @@
+###
+
+GET http://localhost:3030
+
+
+###
+
+GET http://127.0.0.1:3000/participants
+
+
+###
+
+GET http://127.0.0.1:3000/participants/:id
+
+
+###
+
+POST http://127.0.0.1:3000/participants
+
+
+###
+
+DELETE http://127.0.0.1:3000/participants/:id
+
+
+###
+
+PATCH http://127.0.0.1:3000/participants/:id
