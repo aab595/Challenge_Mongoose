@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const Course = require('../models/course')
 
 
-
 /**
  * 
  * COURSE METHODS
@@ -15,9 +14,7 @@ const createCourse = async (req, res) => {
         const c = await Course.create(inputData);
         console.log('Course created successfully');
         res.json(c);
-    } catch (e) {
-        console.error(e.message);
-    }
+    } catch (e) { console.error(e.message); }
 }
 
 // get all courses method

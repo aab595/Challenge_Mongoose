@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const Course = require('../models/participant')
-
+const Participant = require('../models/participant')
+const Course = require('../models/course')
 
 
 /**
@@ -15,9 +15,7 @@ const createParticipant = async (req, res) => {
         const p = await Participant.create(inputData);
         console.log('Participant created successfully');
         res.json(p);
-    } catch (e) {
-        console.error(e.message);
-    }
+    } catch (e) { console.error(e.message); }
 }
 
 // get all participants method
@@ -56,11 +54,39 @@ const editParticipant = async (req, res) => {
     } catch (e) { console.error(e.message); }
 }
 
+// get participants by courses method
+const participantByCourses = (req, res) => Participant.find().exec(async (err, queries) => {
+    if (err) { throw err; }
+
+    const courses = await Course.find();
+    const arrayOutput = [];
+    queries.map((query) => {
+        let name = query.firstname + ' ' + query.lastname;
+        let course = query.courses;
+        let labelText = [];
+        let countVolume = 0;
+        course.forEach(id => {
+            courses.map((course) => {
+                if (course._id.equals(id)) {
+                    countVolume += course.volume;
+                    let courseContent = {label: course.label, volume: course.volume};
+                    labelText.push(courseContent);
+                }
+            })
+        });
+        const output = {name: name, totalHours: countVolume, courses: labelText};
+        arrayOutput.push(output);
+    });
+    // console.log(util.inspect(arrayOutput, false, null, true /* enable colors */))
+    res.json(arrayOutput);
+});
+
 
 module.exports = {
     createParticipant,
     getAllParticipants,
     getParticipantById,
     deleteParticipant,
-    editParticipant
+    editParticipant,
+    participantByCourses
 }
