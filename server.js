@@ -1,43 +1,40 @@
-// const _exec = async () => {
-//     const mongoose = require('mongoose')
-    
-//     const main = require('./src/main')
-
-//     const http = require('http')
-//     const hostname = '127.0.0.1';
-//     const port = 8080;
-
-//     const server = http.createServer(async (req, res) => {
-//     res.statusCode = 200;
-//         res.setHeader('Content-Type', 'text/plain');
-//         await main.connecter();
-//         const result = await main.getAllCourseById("61b9f46edeea1bb406d67a3c");
-//         res.end(`${result}`);
-//     });
-    
-//     server.listen(port, hostname, () => {
-//         console.log(`Server running at http://${hostname}:${port}/`);
-//     });
-// };
-
-// _exec();
-
 const mongoose = require('mongoose')
 const express = require('express')
-const main = require('./src/main')
+
+
 const dbService = require('./src/services/DBService')
+const courseService = require('./src/services/CourseService')
+const participantService = require('./src/services/ParticipantService')
+
 
 app = express();
+app.use(express.json())
+app.use(express.urlencoded({extended : false}))
+
 
 dbService.connecter();
 
-app.get('/participants', (req, res) => {
-    try {
-        let output = main.getAllCourses;
-        res.json(output);
-    } catch (error) {
-        console.error(error)
-    }
-})
 
+/**
+ * COURSE ROUTES
+ */
+app.get('/courses', courseService.getAllCourses);
+app.get('/courses/:id', courseService.getCourseById);
+app.post('/courses', courseService.createCourse);
+app.delete('/courses/:id', courseService.deleteCourse);
+app.patch('/courses/:id', courseService.editCourse);
+
+
+/**
+ * PARTICIPANT ROUTES
+ */
+app.get('/participants', participantService.getAllParticipants);
+app.get('/participants/:id', participantService.getParticipantById);
+app.post('/participants', participantService.createParticipant);
+app.delete('/participants/:id', participantService.deleteParticipant);
+app.patch('/participants/:id', participantService.editParticipant);
+
+/**
+ * RUN SERVER
+ */
 app.listen(3030, () =>  console.log('Server listening on port 3030'))

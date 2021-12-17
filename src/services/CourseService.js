@@ -2,51 +2,57 @@ const mongoose = require('mongoose')
 const Course = require('../models/course')
 
 
+
 /**
  * 
  * COURSE METHODS
  */
 
 // create courses method
-const createCourse = async (course) => {
+const createCourse = async (req, res) => {
     try {
-        const c = await Course.create(course);
+        const inputData = req.body
+        const c = await Course.create(inputData);
         console.log('Course created successfully');
-        console.log(c);
+        res.json(c);
     } catch (e) {
         console.error(e.message);
     }
-};
+}
 
 // get all courses method
-const getAllCourses = async () => {
+const getAllCourses = async (req, res) => {
     try {
         let all = await Course.find();
-        return all;
+        res.json(all);
     } catch (e) { console.error(e.message); }
 }
 
-// get one course by id method
-const getAllCourseById = async (id) => {
+// get one course method
+const getCourseById = async (req, res) => {
     try {
-        let once = await Course.findById(id);
-        return once;
+        let course = await Course.findById(req.params.id);
+        res.json(course);
     } catch (e) { console.error(e.message); }
 }
 
-// delete one course by id method
-const deleteCourseById = async (id) => {
+// delete one course method
+const deleteCourse = async (req, res) => {
     try {
-        await Course.findByIdAndDelete(id);
+        let course = await Course.findByIdAndDelete(req.params.id);
+        res.json(course)
         console.log('Course deleted successfully');
     } catch (e) { console.error(e.message); }
 }
 
-// update one course by id method
-const editCourseById = async (id) => {
+// update one course method
+const editCourse = async (req, res) => {
     try {
-        let course = await Course.findByIdAndUpdate(id)
-        console.log('Course deleted successfully');
+        let inputData = req.body;
+        await Course.findByIdAndUpdate(req.params.id, inputData);
+        let newDoc = await Course.findById(req.params.id);
+        res.json(newDoc);
+        console.log('Course updated successfully');
     } catch (e) { console.error(e.message); }
 }
 
@@ -54,7 +60,7 @@ const editCourseById = async (id) => {
 module.exports = {
     createCourse,
     getAllCourses,
-    getAllCourseById,
-    deleteCourseById,
-    editCourseById
+    getCourseById,
+    deleteCourse,
+    editCourse
 }

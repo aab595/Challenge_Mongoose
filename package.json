@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/aab595/Challenge_Mongoose#readme",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "mongoose": "^6.1.2"
   }
